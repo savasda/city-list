@@ -1,0 +1,23 @@
+<ng-container *ngIf="form" [formGroup]="form">
+  <h3 class="tui-text_h4">Edit City</h3>
+
+  <img imageErrorFallback [attr.src]="form.get('photo')?.value" alt="">
+
+  <tui-input class="tui-space_top-2" formControlName="name">
+    Name
+    <input tuiTextfield />
+  </tui-input>
+  <tui-input class="tui-space_top-4" formControlName="photo">
+    Image URL
+    <input tuiTextfield />
+  </tui-input>
+
+  <div class="tui-space_top-6 flex">
+    <button (click)="cancel()" tuiButton type="button" size="m" appearance="outline" class="tui-space_right-3 tui-space_bottom-3">
+      Cancel
+    </button>
+    <button  (click)="ok()" tuiButton type="button" size="m" appearance="primary" class="tui-space_right-3 tui-space_bottom-3">
+      Save
+    </button>
+  </div>
+</ng-container>
