@@ -51,7 +51,7 @@
       [total]="data.length"
       [page]="data.pageIndex - 1"
       [size]="data.pageSize"
-      [items]="[10, 25, 30]"
+      [items]="dataProcessingService.PAGE_SIZE_OPTIONS"
       (paginationChange)="onPaginate($event)"
     ></tui-table-pagination>
   </div>

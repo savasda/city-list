@@ -11,7 +11,6 @@ export class DataProcessingService<T> {
   private readonly _size$ = new BehaviorSubject<number>(this.TABLE_DEFAULT_PAGE_SIZE);
   private readonly _data$ = new BehaviorSubject<readonly T[]>([]);
 
-
   /**
    * Array of applied filters
    */
