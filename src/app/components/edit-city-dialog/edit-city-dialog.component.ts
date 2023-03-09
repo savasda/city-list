@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TuiDialogContext, TuiButtonModule } from '@taiga-ui/core';
+import { TuiDialogContext, TuiErrorModule, TuiButtonModule } from '@taiga-ui/core';
 import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
 import { CSVRowInterface } from 'src/app/entities/row.interface';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TuiInputModule } from '@taiga-ui/kit';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { TuiInputModule, TuiFieldErrorPipeModule } from '@taiga-ui/kit';
 import { ImageErrorFallbackDirective } from 'src/app/directives/image-error-fallback.directive';
+import { TuiValidationError } from '@taiga-ui/cdk';
 
 @Component({
 	selector: 'app-edit-city-dialog',
@@ -16,16 +17,20 @@ import { ImageErrorFallbackDirective } from 'src/app/directives/image-error-fall
 		FormsModule,
 		TuiInputModule,
 		TuiButtonModule,
-		ImageErrorFallbackDirective
+		ImageErrorFallbackDirective,
+		TuiFieldErrorPipeModule,
+		TuiErrorModule
 	],
 	templateUrl: './edit-city-dialog.component.html',
 	styleUrls: ['./edit-city-dialog.component.less'],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditCityDialogComponent implements OnInit {
+	error = new TuiValidationError('Name of the city cannot be less than 2 characters.');
 	city!: CSVRowInterface;
 	form!: FormGroup;
 	imageURL!: string;
+
 
 	constructor(
 		@Inject(POLYMORPHEUS_CONTEXT)
@@ -40,7 +45,7 @@ export class EditCityDialogComponent implements OnInit {
 		this.imageURL = photo;
 		this.form = this.fb.group({
 			id: [id],
-			name: [name],
+			name: [name, [Validators.minLength(2), Validators.required]],
 			photo: [photo]
 		});
 	}

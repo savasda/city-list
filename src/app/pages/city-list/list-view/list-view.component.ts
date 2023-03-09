@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject, Injector } from '@angular/c
 import { FormControl } from '@angular/forms';
 import { debounceTime, filter, Observable } from 'rxjs';
 import { CSVRowInterface } from 'src/app/entities/row.interface';
-import { CitiesPopulationServiceTsService } from 'src/app/services/cities-population.service.ts.service';
+import { CitiesPopulationServiceTsService } from 'src/app/services/cities-population.service';
 import { DataProcessingService } from 'src/app/services/data-processing.service';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { TuiDialogService } from '@taiga-ui/core';
