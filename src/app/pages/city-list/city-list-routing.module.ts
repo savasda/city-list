@@ -3,13 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { ListViewComponent } from './list-view/list-view.component';
 
 const routes: Routes = [{
-  path: '',
-  pathMatch: 'full',
-  component: ListViewComponent
+	path: '',
+	pathMatch: 'full',
+	component: ListViewComponent
 }];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+	imports: [RouterModule.forChild(routes)],
+	exports: [RouterModule]
 })
 export class CityListRoutingModule { }

@@ -3,42 +3,45 @@ import { HttpClient } from '@angular/common/http';
 import { parseCSV } from './../helpers/csv.helper'
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { CSVRowInterface } from '../entities/row.interface';
+import { GenericHooks } from '../directives/generic-hooks.directive';
 
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
-export class CitiesPopulationServiceTsService {
-  store$ = new BehaviorSubject<CSVRowInterface[]>([]);
+export class CitiesPopulationServiceTsService extends GenericHooks {
+	store$ = new BehaviorSubject<CSVRowInterface[]>([]);
 
-  constructor(
-    private http: HttpClient,
-  ) {
-    this.getCSVData().subscribe(data => this.store$.next(data))
-  }
+	constructor(
+		private http: HttpClient,
+	) {
+		super();
+		this.subscriptions.push(
+			this.getCSVData().subscribe(data => this.store$.next(data))
+		);
+	}
+
+	/**
+	 * Update city name
+	 * @param {CSVRowInterface} city - updated city model
+	 */
+	updateCity(city: CSVRowInterface): void {
+		const listOfCities = this.store$.getValue();
+		const foundCityIndex = listOfCities.findIndex(el => el.id === city.id);
+		if (foundCityIndex !== -1) {
+			listOfCities[foundCityIndex] = city;
+			this.store$.next(listOfCities);
+		}
+	}
 
 
-  /**
-   * Update city name
-   * @param {CSVRowInterface} city - updated city model
-   */
-  updateCity(city: CSVRowInterface): void {
-    const listOfCities = this.store$.getValue();
-    const foundCityIndex = listOfCities.findIndex(el => el.id === city.id);
-    if(foundCityIndex !== -1) {
-      listOfCities[foundCityIndex] = city;
-      this.store$.next(listOfCities);
-    }
-  }
-
-
-  /**
-   * Getting data from the CSV file.
-   */
-  private getCSVData(): Observable<any> {
-    return this.http.get('./../../assets/cities.csv', {responseType: 'text'})
-      .pipe(
-        map(data => parseCSV(data)),
-      )
-  }
+	/**
+	 * Getting data from the CSV file.
+	 */
+	private getCSVData(): Observable<any> {
+		return this.http.get('./../../assets/cities.csv', { responseType: 'text' })
+			.pipe(
+				map(data => parseCSV(data)),
+			)
+	}
 }

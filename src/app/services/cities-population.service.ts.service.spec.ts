@@ -7,35 +7,35 @@ import { CitiesPopulationServiceTsService } from './cities-population.service.ts
 
 
 describe('CitiesPopulationServiceTsService', () => {
-  let service: CitiesPopulationServiceTsService;
-  let http = {
-    get: () => {
-      /**
-       * Do nothing
-       */
-    }
-  } as unknown as HttpClient;
-  let mockData: CSVRowInterface[] = [
-    {id: 1, name: 'test', photo: ''},
-    {id: 2, name: 'test2', photo: ''}
-  ]
+	let service: CitiesPopulationServiceTsService;
+	let http = {
+		get: () => {
+			/**
+			 * Do nothing
+			 */
+		}
+	} as unknown as HttpClient;
+	let mockData: CSVRowInterface[] = [
+		{ id: 1, name: 'test', photo: '' },
+		{ id: 2, name: 'test2', photo: '' }
+	]
 
-  beforeEach(() => {
-    spyOn(http, 'get').and.returnValue(of(''))
-    service = new CitiesPopulationServiceTsService(http);
-  });
+	beforeEach(() => {
+		spyOn(http, 'get').and.returnValue(of(''))
+		service = new CitiesPopulationServiceTsService(http);
+	});
 
 
-  describe('updateCity', () => {
-    it('should update existing city', (done) => {
-      const updatedCity = {id: 1, name: 'Updated', photo: 'url'}
-      service.store$.next(mockData);
-      service.updateCity(updatedCity);
-      service.store$.subscribe(cities => {
-        const city = cities.find(el => el.id === 1);
-        expect(city).toEqual(updatedCity);
-        done()
-      })
-    });
-  });
+	describe('updateCity', () => {
+		it('should update existing city', (done) => {
+			const updatedCity = { id: 1, name: 'Updated', photo: 'url' }
+			service.store$.next(mockData);
+			service.updateCity(updatedCity);
+			service.store$.subscribe(cities => {
+				const city = cities.find(el => el.id === 1);
+				expect(city).toEqual(updatedCity);
+				done()
+			})
+		});
+	});
 });
